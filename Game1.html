@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+        <audio autoplay controls loop>
+                <source src="Game track.mp3">
+        </audio>
+</head>
+<body>
+	<canvas id="mycanvas" width=600 height=400style="border:10px solid purple">
+	</canvas> 
+	<script>
+		var canvas= document.getElementById("mycanvas");
+		document.addEventListener('keydown', keyd);
+		var ar= canvas.getContext("2d");
+		setInterval(update, 1000/15);
+
+
+
+		var img= new Image();
+		img.src = "maze.png";
+		img.onload = background;
+
+		function background(){
+		ar.drawImage(img,0,0)
+		}
+		
+        var cmd= new Image();
+        cmd.src= "handman.png";
+        var x=30;
+        var y=30;
+        var direction = 'r'
+
+        cmd.onload = move;
+
+        function square(x, y, w, h) {
+        	this.xcoord = x;
+        	this.ycoord = y;
+        	this.width = w;
+        	this.height = h;
+        }
+
+        var gridarray = new Array();
+        
+        gridarray[0] = new square(45,45,20,82);
+        gridarray[1] = new square(60,60,60,30);
+        gridarray[2] = new square(140,0,21,60);
+        gridarray[3] = new square(218,65,169,22);
+        gridarray[4] = new square(405,0,22,60);
+        gridarray[5] = new square(483,64,52,22);
+        gridarray[6] = new square(515,85,21,61);
+        gridarray[7] = new square(120,120,60,30);
+        gridarray[8] = new square(210,120,30,60);
+        gridarray[9] = new square(210,180,120,30);
+        gridarray[10] = new square(270,120,120,30);
+        gridarray[11] = new square(360,150,30,60);
+        gridarray[12] = new square(120,180,60,30);
+        gridarray[13] = new square(420,180,60,30);
+        gridarray[14] = new square(60,180,30,60);
+        gridarray[15] = new square(60,240,60,30);
+        gridarray[16] = new square(210,240,180,30);
+        gridarray[17] = new square(150,240,30,60);
+        gridarray[18] = new square(420,240,30,60);
+        gridarray[19] = new square(510,180,30,60);
+        gridarray[20] = new square(480,240,60,30);
+        gridarray[21] = new square(26,26,0,400)
+
+        function collisioncheck(box){
+        	//the members of the square are: xcoord, ycoord, width, and height
+        	if (x >= box.xcoord && x <= box.xcoord + box.width && y>= box.ycoord && y<= box.ycoord+ box.height){
+        		return true;
+        	}
+        	return false;
+        }
+
+        function move(){
+        ar.drawImage(cmd, x, y);
+        }
+        function update(){
+ 
+                var collide = false
+                for(var i = 0; i < 21; i++)
+                {
+                        if (collisioncheck(gridarray[i]) == true)
+                        {
+                                collide = true;
+
+                         switch(direction){
+                        case 'l': //left
+                                x+=10;
+                                break;
+                        case 'u': //down
+                                y-=10;
+                                break;
+                        case 'r': //right
+                                x-=10;
+                                break; 
+                        case 'd': //up
+                                y+=10;
+                                break; 
+                }
+                direction=0;
+                        }
+
+                }
+                if (collide == false)
+                {
+                      
+                  switch(direction){
+                        case 'l': //left
+                                x-=5;
+                                break;
+                        case 'u': //down
+                                y-=5;
+                                break;
+                        case 'r': //right
+                                x+=5;
+                                break; 
+                        case 'd': //up
+                                y+=5;
+                                break; 
+                }   
+                }
+                ar.clearRect(0,0,canvas.width, canvas.height);
+                background();
+                move();
+        }       
+	function keyd(e){
+		switch(e.keyCode){
+			case 37: //left
+                                direction='l';
+				break;
+			case 38: //up
+				direction='u';
+                                break;
+			case 39: //right
+                                direction='r';
+				break; 
+			case 40: //down
+				direction='d';
+                                break; 
+		} 
+	}
+        
+		
+
+	</script>
+</body>
+</html>
