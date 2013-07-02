@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+        <audio autoplay controls loop>
+                <source src="Game track.mp3">
+        </audio>
+</head>
+<body>
+	<canvas id="mycanvas" width=600 height=400style="border:10px solid purple">
+	</canvas> 
+	<script>
+		var canvas= document.getElementById("mycanvas");
+		document.addEventListener('keydown', keyd);
+		var ar= canvas.getContext("2d");
+		setInterval(update, 1000/45);
+		var img= new Image();
+        var eaten = false;
+        var numberEaten = 0;
+		img.src = "maze4.png";
+		img.onload = background;
+		function background(){
+		  ar.drawImage(img,0,0)
+          coinLoad();
+		}
+        var coin= new Image();
+        coin.src= "ring.png"
+        coin.onload= function(){
+            ar.drawImage(coin,30,60);
+        }
+        function Enemy(){
+            this.x = 240 + Math.floor(Math.random() * 60);
+            this.y = 150;
+            this.direction =Math.floor(Math.random() * 4) + 1;
+        }
+        		
+            var imgEnemy1 = new Image();
+        imgEnemy1.src = "burger.png";
+        var enemy1 = new Enemy();
+        var enemy1Moved = 0;
+        
+        var imgEnemy2 = new Image();
+        imgEnemy2.src = "burger.png";
+        var enemy2 = new Enemy();
+        var enemy2Moved = 0;
+        
+        var imgEnemy3 = new Image();
+        imgEnemy3.src = "burger.png";
+        var enemy3 = new Enemy();
+        var enemy3Moved = 0;
+        
+        var imgEnemy4 = new Image();
+        imgEnemy4.src = "burger.png";
+        var enemy4 = new Enemy();
+        var enemy4Moved = 0;
+        /*
+        function eatPoints()
+        {
+            for (var z = 0; z < ringarray.length; i++)
+            {
+                if ( x == ringarray.cx && y ==ringarray.cy)
+                    set eaten = true;
+                    numberEaten++;
+                    context.clearRect(coinPix, ringarray.cx, ringarray.cy, 25, 25);
+        
+            }
+            score = numberEaten *10;
+        }
+    
+    function winGame()
+    {
+        if (score >=140)
+            
+    }*/
+
+
+         function move(){
+        ar.drawImage(cmd, x, y);
+        ar.drawImage(imgEnemy1, enemy1.x, enemy1.y);
+            ar.drawImage(imgEnemy2, enemy2.x, enemy2.y);
+            ar.drawImage(imgEnemy3, enemy3.x, enemy3.y);
+            ar.drawImage(imgEnemy4, enemy4.x, enemy4.y);
+        }
+
+        function coinPix(a,b){
+            this.cx=a;
+            this.cy=b;
+
+        }
+         // COORDINETS FOR THE COIN ARRAY
+        var ringarray= new Array();
+        ringarray[0]= new coinPix(30,60);
+        ringarray[1]= new coinPix(30,120);
+        ringarray[2]= new coinPix(30,180);
+        ringarray[3]= new coinPix(30,240);
+        ringarray[4]= new coinPix(60,270);
+        ringarray[5]= new coinPix(120,270);
+        ringarray[6]= new coinPix(120,210);
+        ringarray[7]= new coinPix(120,270);
+        ringarray[8]= new coinPix(190,180);
+        ringarray[9]= new coinPix(90,120);
+        ringarray[10]= new coinPix(120,90);
+        ringarray[11]= new coinPix(120,30);
+        ringarray[12]= new coinPix(120,270);
+        ringarray[13]= new coinPix(120,270); 
+        ringarray[14]= new coinPix(400,230); 
+        ringarray[15]= new coinPix(430,215);
+        ringarray[16]= new coinPix(280,162);
+        ringarray[17]= new coinPix(490,215);
+        ringarray[18]= new coinPix(550,215);
+        ringarray[19]= new coinPix(400,140);
+
+         var cmd= new Image();
+        cmd.src= "handman.png";
+        var x=30;
+        var y=30;
+        var direction = 'r'
+        cmd.onload = move;
+        var coin= new Image();
+        coin.src= "ring.png";
+        coin.onload= coinLoad;
+        function coinLoad(){
+        //loop arrayring
+          for(var z = 0; z < 20; z++)
+                {
+                    
+                    ar.drawImage(coin, ringarray[z].cx, ringarray[z].cy, 15, 15);
+                }
+        }
+
+
+        function eatPoints()
+        {
+             for (var q = 0; q < 14 ; q++)
+            {
+                if ( x == ringarray.cx && y ==ringarray.cy)
+                    eaten = true;
+                    numberEaten++;
+                    ar.clearRect(coin, ringarray.cx, ringarray.cy);   
+            }
+            score = numberEaten *10;
+        }
+
+        function square(x, y, w, h) {
+        	this.xcoord = x;
+        	this.ycoord = y;
+        	this.fat = w;
+        	this.tall = h;
+        }
+
+        // BORDERS OF THE MAZE
+        var gridarray = new Array();
+        
+        gridarray[0] = new square(60,60,90,150);
+        gridarray[1] = new square(90,60,120,90);
+        gridarray[2] = new square(150,0,180,90);
+        gridarray[3] = new square(210,60,240,90);
+        gridarray[4] = new square(240,60,270,90);
+        gridarray[5] = new square(270,60,300,90);
+        gridarray[6] = new square(300,60,330,90);
+        gridarray[7] = new square(330,60,360,90);
+        gridarray[8] = new square(360,60,390,90);
+        gridarray[9] = new square(420,0,450,90);
+        gridarray[10] = new square(480,60,510,90);
+        gridarray[11] = new square(510,60,540,150);
+        gridarray[12] = new square(120,120,150,150);
+        gridarray[13] = new square(150,120,180,150);
+        gridarray[14] = new square(210,120,240,210);
+        gridarray[15] = new square(240,180,330,210);
+        gridarray[16] = new square(270,120,360,150);
+        gridarray[17] = new square(360,150,390,120);
+        gridarray[18] = new square(420,120,480,150);
+        gridarray[19] = new square(420,180,480,210);
+        gridarray[20] = new square(510,180,540,270);
+        gridarray[21] = new square(420,240,450,330);
+        gridarray[22] = new square(210,240,390,270);
+        gridarray[23] = new square(150,240,180,330);
+        gridarray[24] = new square(120,180,180,210)
+        gridarray[25] = new square(90,240,120,270);
+        gridarray[26] = new square(60,180,90,270);
+        gridarray[27] = new square(480,240,210,270);
+
+        function collisioncheck(box,x,y){
+        	//the members of the square are: xcoord, ycoord, width, and height
+        	if (x >= box.xcoord && x <=  box.fat && y>= box.ycoord && y<=  box.tall){
+        		return true;
+        	}
+        	return false;
+        }
+
+       
+        function update(){
+ 
+                var collide = false;
+                for(var i = 0; i < 28; i++)
+                {
+                     if (collisioncheck(gridarray[i],x,y) == true)
+                     {
+                        collide = true;
+                       
+
+                        switch(direction){
+                        case 'l': //left
+                                x+=1;
+                                break;
+                        case 'u': //down
+                                y-=1;
+                                break;
+                        case 'r': //right
+                                x-=1;
+                                break; 
+                        case 'd': //up
+                                y+=1;
+                                break; 
+                }
+                         direction=0;
+                     }
+
+                }
+                if (collide == false)
+                {
+                      
+                  switch(direction){
+                        case 'l': //left
+                                x-=1;
+                                break;
+                        case 'u': //down
+                                y-=1;
+                                break;
+                        case 'r': //right
+                                x+=1;
+                                break; 
+                        case 'd': //up
+                                y+=1;
+                                break; 
+                }   
+                ar.clearRect(0,0,canvas.fat, canvas.tall);
+                background();
+                eatPoints();
+                move();
+                changeDirection();
+
+                }
+             
+        }       
+        function changeDirection(){
+            var moved = false;
+            while(!moved){
+                if(enemy1Moved >= 10){
+                    enemy1Moved = 0;
+                    enemy1.direction = Math.floor(Math.random() * 4) + 1;
+                }
+                else if (enemy1.direction === 1 && enemy1.x > 30 && enemy1Moved < 10){  //left
+                    enemy1.x -= 5;
+                    enemy1Moved++;
+                    moved = true;
+                }
+                else if (enemy1.direction === 2 && enemy1.y > 30 && enemy1Moved < 10){  //up
+                    enemy1.y -= 5;
+                    enemy1Moved++;
+                    moved = true;
+                }
+                else if (enemy1.direction === 3 && enemy1.x + 30 < 570 && enemy1Moved < 10){  //right
+                    enemy1.x += 5;
+                    enemy1Moved++;
+                    moved = true;
+                }
+                else if (enemy1.direction === 4 && enemy1.y + 30 < 300 && enemy1Moved < 10){  //down
+                    enemy1.y += 5;
+                    enemy1Moved++;
+                    moved = true;
+                }
+                else{
+                    enemy1.direction = Math.floor(Math.random() * 4) + 1;
+                }
+            }
+            var moved = false;
+            while(!moved){
+                if(enemy2Moved >= 10){
+                    enemy2Moved = 0;
+                    enemy2.direction = Math.floor(Math.random() * 4) + 1;
+                }
+                else if (enemy2.direction === 1 && enemy2.x > 30 && enemy2Moved < 10){  //left
+                    enemy2.x -= 5;
+                    enemy2Moved++;
+                    moved = true;
+                }
+                else if (enemy2.direction === 2 && enemy2.y > 30 && enemy2Moved < 10){  //up
+                    enemy2.y -= 5;
+                    enemy2Moved++;
+                    moved = true;
+                }
+                else if (enemy2.direction === 3 && enemy2.x + 30 < 570 && enemy2Moved < 10){  //right
+                    enemy2.x += 5;
+                    enemy2Moved++;
+                    moved = true;
+                }
+                else if (enemy2.direction === 4 && enemy2.y + 30 < 300 && enemy2Moved < 10){  //down
+                    enemy2.y += 5;
+                    enemy2Moved++;
+                    moved = true;
+                }
+                else{
+                    enemy2.direction = Math.floor(Math.random() * 4) + 1;
+                }
+            }
+            var moved = false;
+            while(!moved){
+                if(enemy3Moved >= 10){
+                    enemy3Moved = 0;
+                    enemy3.direction = Math.floor(Math.random() * 4) + 1;
+                }
+                else if (enemy3.direction === 1 && enemy3.x > 30 && enemy3Moved < 10){  //left
+                    enemy3.x -= 5;
+                    enemy3Moved++;
+                    moved = true;
+                }
+                else if (enemy3.direction === 2 && enemy3.y > 30 && enemy3Moved < 10){  //up
+                    enemy3.y -= 5;
+                    enemy3Moved++;
+                    moved = true;
+                }
+                else if (enemy3.direction === 3 && enemy3.x + 30 < 570 && enemy3Moved < 10){  //right
+                    enemy3.x += 5;
+                    enemy3Moved++;
+                    moved = true;
+                }
+                else if (enemy3.direction === 4 && enemy3.y + 30 < 300 && enemy3Moved < 10){  //down
+                    enemy3.y += 5;
+                    enemy3Moved++;
+                    moved = true;
+                }
+                else{
+                    enemy3.direction = Math.floor(Math.random() * 4) + 1;
+                }
+            }
+            var moved = false;
+            while(!moved){
+                if(enemy4Moved >= 10){
+                    enemy4Moved = 0;
+                    enemy4.direction = Math.floor(Math.random() * 4) + 1;
+                }
+                else if (enemy4.direction === 1 && enemy4.x > 30 && enemy4Moved < 10){  //left
+                    enemy4.x -= 5;
+                    enemy4Moved++;
+                    moved = true;
+                }
+                else if (enemy4.direction === 2 && enemy4.y > 30 && enemy4Moved < 10){  //up
+                    enemy4.y -= 5;
+                    enemy4Moved++;
+                    moved = true;
+                }
+                else if (enemy4.direction === 3 && enemy4.x + 30 < 570 && enemy4Moved < 10){  //right
+                    enemy4.x += 5;
+                    enemy4Moved++;
+                    moved = true;
+                }
+                else if (enemy4.direction === 4 && enemy4.y + 30 < 300 && enemy4Moved < 10){  //down
+                    enemy4.y += 5;
+                    enemy4Moved++;
+                    moved = true;
+                }
+                else{
+                    enemy4.direction = Math.floor(Math.random() * 4) + 1;
+                }
+            }
+        }
+                
+                	function keyd(e){
+                		switch(e.keyCode){
+                			case 37: //left
+                                direction='l';
+                				break;
+                			case 38: //up
+                				direction='u';
+                                 break;
+                			case 39: //right
+                                direction='r';
+                				break; 
+                			case 40: //down
+                				direction='d';
+                                 break; 
+                		} 
+                	}
+                        
+		
+
+	</script>
+</body>
+</html>
