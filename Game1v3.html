@@ -16,7 +16,7 @@
 		var img= new Image();
         var eaten = false;
         var numberEaten = 0;
-		img.src = "maze4.png";
+		img.src = "maze2nice.png";
 		img.onload = background;
 		function background(){
 		  ar.drawImage(img,0,0)
@@ -52,26 +52,10 @@
         imgEnemy4.src = "burger.png";
         var enemy4 = new Enemy();
         var enemy4Moved = 0;
-        /*
-        function eatPoints()
-        {
-            for (var z = 0; z < ringarray.length; i++)
-            {
-                if ( x == ringarray.cx && y ==ringarray.cy)
-                    set eaten = true;
-                    numberEaten++;
-                    context.clearRect(coinPix, ringarray.cx, ringarray.cy, 25, 25);
         
-            }
-            score = numberEaten *10;
-        }
+        
     
-    function winGame()
-    {
-        if (score >=140)
-            
-    }*/
-
+   
 
          function move(){
         ar.drawImage(cmd, x, y);
@@ -97,8 +81,8 @@
         ringarray[6]= new coinPix(120,210);
         ringarray[7]= new coinPix(120,270);
         ringarray[8]= new coinPix(190,180);
-        ringarray[9]= new coinPix(90,120);
-        ringarray[10]= new coinPix(120,90);
+        ringarray[9]= new coinPix(98,130);
+        ringarray[10]= new coinPix(125,95);
         ringarray[11]= new coinPix(120,30);
         ringarray[12]= new coinPix(120,270);
         ringarray[13]= new coinPix(120,270); 
@@ -108,7 +92,13 @@
         ringarray[17]= new coinPix(490,215);
         ringarray[18]= new coinPix(550,215);
         ringarray[19]= new coinPix(400,140);
-
+		
+		var arrayVisible = new Array();
+		for(var i =0; i<20; i++)
+		{
+		arrayVisible[i] = false;//false == still visible
+		}
+		
          var cmd= new Image();
         cmd.src= "handman.png";
         var x=30;
@@ -122,22 +112,25 @@
         //loop arrayring
           for(var z = 0; z < 20; z++)
                 {
-                    
-                    ar.drawImage(coin, ringarray[z].cx, ringarray[z].cy, 15, 15);
+                    if (arrayVisible[z] == false)
+					{
+						ar.drawImage(coin, ringarray[z].cx, ringarray[z].cy, 15, 15);
+					}
                 }
         }
 
 
         function eatPoints()
         {
-             for (var q = 0; q < 14 ; q++)
+             for (var q = 0; q < ringarray.length ; q++)
             {
-                if ( x == ringarray.cx && y ==ringarray.cy)
-                    eaten = true;
+                if ( x == ringarray[q].cx && y ==ringarray[q].cy)
+                    arrayVisible[q] = true;
                     numberEaten++;
                     ar.clearRect(coin, ringarray.cx, ringarray.cy);   
             }
             score = numberEaten *10;
+			
         }
 
         function square(x, y, w, h) {
@@ -221,23 +214,37 @@
                       
                   switch(direction){
                         case 'l': //left
+							{
                                 x-=1;
+								//eatPoints();
                                 break;
+							}
                         case 'u': //down
-                                y-=1;
+                            { 
+								y-=1;
+								//eatPoints();
                                 break;
+							}
                         case 'r': //right
-                                x+=1;
-                                break; 
+							{
+								x+=1;
+								//eatPoints();
+                                break;
+							}
                         case 'd': //up
-                                y+=1;
+							{
+                                y+=1
+								//eatPoints();
                                 break; 
+							}
                 }   
                 ar.clearRect(0,0,canvas.fat, canvas.tall);
                 background();
-                eatPoints();
+				eatPoints();
+                
                 move();
                 changeDirection();
+				
 
                 }
              
